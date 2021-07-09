@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Prints the weather status for the city saved in ~/.config/city
+# Opens a more details weather report when BLOCK_BUTTON is set (click event from i3blocks)
+
+cityfile="${XDG_CONFIG_HOME:-$HOME/.config}/city"
+if [ ! -f "$cityfile" ]; then
+    echo "No city"
+    [ $BLOCK_BUTTON ] && notify-send "Add your current city to ~/.config/city"
+else
+    city="$(<$cityfile)"
+    echo $(curl -s https://wttr.in/$city?format=%c+%t)
+    [ $BLOCK_BUTTON ] && $TERMINAL --hold -e curl -Ss "https://wttr.in/$city"
+fi

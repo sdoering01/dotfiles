@@ -1,0 +1,12 @@
+#!/bin/sh
+
+while read file
+do
+    full_path="$(readlink -f "$file")"
+    case "$1" in
+    "w")
+        ln -sf "$full_path" ~/.config/wallpaper &&
+        set-wallpaper
+        ;;
+    esac
+done

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+filename="$(basename "$1")"
+geometry="$2x$3"
+filesize="$(du -Dh "$1" | cut -f 1)"
+
+printf "%9s  %4s  $filename" "$geometry" "$filesize"

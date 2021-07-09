@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# A dmenu script.
+# Processes a mathematic expression with bc -l. The result is displayed
+# in the next prompt.
+# The result displayed in the prompt can be referenced with ans.
+# When a syntax error occurs the last correct answer is used.
+#
+# Example:
+#   Calculate: 2 + 2
+#   Calculate (4): ans * 2
+#   Calculate (8):
+
+# Use err_file to write syntax errors of bc into because bc
+# exits with 0 even when syntax errors occur
+err_file=/tmp/dmenucalc_err
+[ -e "$err_file" ] && rm "$err_file"
+err=false
+
+while :
+do
+    [ -n "$ans" ] && ans_suffix=" ($ans)" || unset ans_suffix
+    $err && error_suffix=" (error)" || unset error_suffix
+
+    expr=$(echo -n | dmenu -p "Calculate$ans_suffix$error_suffix:")
+    [ -z "$expr" ] && exit
+    expr="$(echo "$expr" | sed s/ans/$ans/g)"
+    temp_ans="$(echo "$expr" | bc -l 2> $err_file)"
+    [ $(wc -l < $err_file) -eq 0 ] && ans="$temp_ans" && err=false || err=true
+    rm "$err_file"
+done
+

@@ -1,0 +1,44 @@
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+
+command=$HOME/.local/libexec/i3blocks/$BLOCK_NAME
+separator_block_width=20
+markup=pango
+
+[dunst-status]
+command=dunst-status
+interval=once
+signal=5
+
+[weather-status]
+command=weather-status
+interval=1800
+
+[volume]
+label= 
+interval=1
+signal=10
+
+[memory]
+label= 
+interval=30
+
+[bandwidth]
+command=$HOME/.local/libexec/i3blocks/bandwidth --inlabel " " --outlabel " "
+interval=3
+
+[cpu_usage]
+label= 
+interval=5
+
+[time]
+label= 
+command=date '+%d.%m.%Y %H:%M:%S'
+interval=1
+separator=false
+separator_block_width=8
+
+[padding]
+full_text=

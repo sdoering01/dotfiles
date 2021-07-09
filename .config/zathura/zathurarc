@@ -1,0 +1,6 @@
+set selection-clipboard clipboard
+
+map <C-+> zoom in
+map <C--> zoom out
+
+set default-bg "#333333"

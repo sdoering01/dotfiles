@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# A dmenu prompt script.
+# Prompts the user with $1 to execute command $2
+# 
+# Example:
+#   ./prompt "Do you want to shutdown?" "shutdown now"
+
+[ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && $2

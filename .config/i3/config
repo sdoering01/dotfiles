@@ -1,0 +1,251 @@
+## Variables
+
+set $mod Mod4
+
+set $ws1 "1 &#xf015;"
+set $ws2 "2 &#xf121;"
+set $ws3 "3 &#xf268;"
+set $ws4 "4 &#xf130;"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8 &#xf086;"
+set $ws9 "9 &#xf0e0;"
+set $ws10 "10 &#xf1bc;"
+
+set $screen2 "HDMI-0"
+set $screen1 "DP-2"
+
+set $terminal_exec alacritty -e
+set $browser "chromium"
+set $mail "evolution"
+set $ide "code"
+
+# i3blocks refresh commands
+# Signal has to be same number as the signal attribute of a block in i3blocks
+set $refresh_volume pkill -SIGRTMIN+10 i3blocks
+set $refresh_dunst_status pkill -SIGRTMIN+5 i3blocks
+
+set $base00 #101218
+set $base01 #1f222d
+set $base02 #252936
+set $base03 #7780a1
+set $base04 #C0C5CE
+set $base05 #d1d4e0
+set $base06 #C9CCDB
+set $base07 #ffffff
+set $base08 #ee829f
+set $base09 #f99170
+set $base0A #ffefcc
+set $base0B #a5ffe1
+set $base0C #97e0ff
+set $base0D #97bbf7
+set $base0E #c0b7f9
+set $base0F #fcc09e
+
+# border background text indicator
+client.focused $base0D $base0D $base00 $base0D
+client.focused_inactive $base02 $base02 $base03 $base02
+client.unfocused $base01 $base01 $base03 $base01
+client.urgent $base02 $base08 $base07 $base02
+
+hide_edge_borders both
+
+font pango:DejaVu Sans Mono 10
+
+floating_modifier $mod
+
+## Workspace settings
+
+workspace $ws4 output $screen2
+workspace $ws8 output $screen2
+workspace $ws10 output $screen2
+
+# Spotify requires workaround
+for_window [class="Spotify"] move to workspace $ws10
+assign [class="Evolution"] $ws9
+
+## Key bindings
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_volume
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_volume
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+odiaeresis split h
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+bindsym $mod+q focus child
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+shift+period move workspace to output right
+bindsym $mod+shift+comma move workspace to output left
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec --no-startup-id prompt "Do you really want to exit i3?" "i3-msg exit"
+
+# Resize without resize mode (i3resize is an external script)
+bindsym $mod+Shift+z exec --no-startup-id i3resize left
+bindsym $mod+Shift+u exec --no-startup-id i3resize down
+bindsym $mod+Shift+i exec --no-startup-id i3resize up
+bindsym $mod+Shift+o exec --no-startup-id i3resize right
+
+# Lock and shutdown
+bindsym $mod+shift+x exec --no-startup-id lock -c 1f222d
+bindsym $mod+shift+s exec --no-startup-id prompt "Do you really want to shut down?" "shutdown now"
+
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# Screenshots
+set $ss_dest $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+set $ss_clip xclip -sel clip -t image/png
+set $ss_select maim -s -B -u -l -c 0.15,0.3,0.45,0.4
+set $ss_full maim -B -u
+
+bindsym Print exec --no-startup-id "$ss_full $ss_dest"
+bindsym Shift+Print exec --no-startup-id "$ss_full | $ss_clip"
+
+bindsym Ctrl+Print exec --no-startup-id "$ss_select $ss_dest"
+bindsym Ctrl+Shift+Print exec --no-startup-id "$ss_select | $ss_clip"
+
+# Dunst
+bindsym $mod+minus exec --no-startup-id dunstctl close-all
+bindsym $mod+plus exec --no-startup-id dunstctl history-pop
+bindsym $mod+shift+n exec --no-startup-id dunstctl set-paused toggle && $refresh_dunst_status
+
+# Open wallpaper folder with sxiv
+bindsym $mod+shift+w exec sxiv -t -N "sxiv wallpaper picker" $HOME/Pictures/Wallpapers
+
+# Programs
+bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+Return exec --no-startup-id $TERMINAL
+bindsym $mod+b exec $browser
+bindsym $mod+m exec $mail
+bindsym $mod+shift+m exec --no-startup-id $terminal_exec neomutt
+bindsym $mod+i exec $ide
+
+# Dmenu scripts
+bindsym $mod+o exec --no-startup-id dmenucalc
+
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym geturn mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+## Bar
+
+bar {
+    status_command i3blocks
+
+    position top
+    tray_output $screen2
+
+    colors {
+        separator $base03
+        background $base01
+        statusline $base05
+
+        # border background text
+        focused_workspace $base0C $base0D $base00
+        active_workspace $base02 $base02 $base07
+        inactive_workspace $base01 $base01 $base03
+        urgent_workspace $base08 $base08 $base07
+    }
+}
+
+## Autostart
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- lock -c 1f222d
+exec --no-startup-id "setxkbmap -layout de"
+exec_always --no-startup-id picom
+exec_always --no-startup-id set-wallpaper
+exec_always --no-startup-id $HOME/.screenlayout/layout.sh
+exec --no-startup-id nextcloud --background
+exec --no-startup-id unclutter --timeout 3 --jitter 5 --ignore-scrolling
+exec --no-startup-id dunst
+
+## i3gaps
+
+for_window [class=".*"] border pixel 2
+gaps inner 8
+
+## Floating windows
+
+for_window [class="Evolution" title="Appointment .*"] floating enable
+for_window [class="Matplotlib"] floating enable
+for_window [class="Steam" title="Steam Guard .*"] floating enable
+for_window [class="Sxiv" instance="sxiv wallpaper picker"] floating enable
+
+## Other window rules
+
+for_window [title=".*is sharing (your screen|a window)\.$"] border pixel 0
