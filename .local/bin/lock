@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # Locks screen and pauses dunst notifications until screen is unlocked
-# Passes its parameters to i3lock
+# Passes its parameters to i3lock or passes standard values if no
+# parameters are received
 
+args=${@:-"-c 1f222d"}
 prev_state=$(dunstctl is-paused)
 dunstctl set-paused true
-i3lock -n $@
+i3lock -n $args
 dunstctl set-paused $prev_state
