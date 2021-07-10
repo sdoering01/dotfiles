@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Prints whether dunst is paused
+
+[ $BLOCK_BUTTON ] && dunstctl set-paused toggle
+$(dunstctl is-paused) && echo "" || echo ""
