@@ -7,6 +7,12 @@ command=$HOME/.local/libexec/i3blocks/$BLOCK_NAME
 separator_block_width=20
 markup=pango
 
+[battery-status]
+label=
+command=battery-status
+battery=BAT1
+interval=10
+
 [dunst-status]
 command=dunst-status
 interval=once

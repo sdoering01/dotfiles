@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Shows status of battery
+
+battery=/sys/class/power_supply/$battery
+capacity=$(<$battery/capacity)
+batstatus=$(<$battery/status)
+printf "%2s%%\n" "$capacity"
+[ $capacity -le 10 ] && exit 33
