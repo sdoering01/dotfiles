@@ -182,7 +182,7 @@ bindsym $mod+Return exec --no-startup-id $TERMINAL
 bindsym $mod+b exec $browser
 bindsym $mod+m exec $mail
 bindsym $mod+shift+m exec --no-startup-id $terminal_exec neomutt
-bindsym $mod+i exec $ide
+bindsym $mod+c exec $ide
 
 # Dmenu scripts
 bindsym $mod+o exec --no-startup-id dmenucalc
