@@ -7,16 +7,28 @@ command=$HOME/.local/libexec/i3blocks/$BLOCK_NAME
 separator_block_width=20
 markup=pango
 
-[battery-status]
-label=
-command=battery-status
-battery=BAT1
+[bluetooth-status]
+command=bluetooth-status
 interval=10
+separator=false
+separator_block_width=12
+
+[wifi-status]
+command=wifi-status
+interval=10
+separator=false
+separator_block_width=12
 
 [dunst-status]
 command=dunst-status
 interval=once
 signal=5
+
+[battery-status]
+label=
+command=battery-status
+battery=BAT1
+interval=30
 
 [weather-status]
 command=weather-status

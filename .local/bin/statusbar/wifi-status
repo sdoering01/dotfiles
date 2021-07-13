@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Echos green color if wifi is connected or red otherwise
+
+wstatus=$(iwctl station list | grep -E -m1 -o "(connected|disconnected)")
+echo 
+echo 
+[ $wstatus = "connected" ] && echo "#00ff00" || echo "#ff0000"
+[ $BLOCK_BUTTON ] && $TERMINAL -e iwctl >/dev/null 2>&1
