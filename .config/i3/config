@@ -13,8 +13,8 @@ set $ws8 "8 &#xf086;"
 set $ws9 "9 &#xf0e0;"
 set $ws10 "10 &#xf1bc;"
 
-set $screen2 "HDMI-0"
-set $screen1 "DP-2"
+set $screen2 "eDP1"
+set $screen1 "eDP1"
 
 set $terminal_exec alacritty -e
 set $browser "chromium"
@@ -172,6 +172,10 @@ bindsym Ctrl+Shift+Print exec --no-startup-id "$ss_select | $ss_clip"
 bindsym $mod+minus exec --no-startup-id dunstctl close-all
 bindsym $mod+plus exec --no-startup-id dunstctl history-pop
 bindsym $mod+shift+n exec --no-startup-id dunstctl set-paused toggle && $refresh_dunst_status
+
+# Open bluetoothctl and iwctl
+bindsym $mod+shift+b exec --no-startup-id $terminal_exec bluetoothctl
+bindsym $mod+i exec --no-startup-id $terminal_exec iwctl
 
 # Open wallpaper folder with sxiv
 bindsym $mod+shift+w exec sxiv -t -N "sxiv wallpaper picker" $HOME/Pictures/Wallpapers
