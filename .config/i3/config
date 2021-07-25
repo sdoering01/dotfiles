@@ -56,10 +56,6 @@ floating_modifier $mod
 
 ## Workspace settings
 
-workspace $ws4 output $screen2
-workspace $ws8 output $screen2
-workspace $ws10 output $screen2
-
 # Spotify requires workaround
 for_window [class="Spotify"] move to workspace $ws10
 assign [class="Evolution"] $ws9
